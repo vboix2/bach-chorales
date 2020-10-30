@@ -1,5 +1,5 @@
 # Xml dataframe columns
-COLUMNS = [
+XML_COLUMNS = [
     'title',
     'part',
     'key_fifths',

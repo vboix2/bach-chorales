@@ -2,17 +2,18 @@ import xml.etree.ElementTree as ET
 import re
 import pandas as pd
 import constants as K
+from os import listdir
 
 
 def read_xml(file):
-    """Read a musicxml file and returns a pandas dataframe with all contents"""
+    """Read a musicxml file and returns a pandas dataframe"""
 
     # Parse file
     parsed_xml = ET.parse(file)
     root = parsed_xml.getroot()
 
     # Create dataframe
-    df = pd.DataFrame(columns=K.COLUMNS)
+    df = pd.DataFrame(columns=K.XML_COLUMNS)
 
     # Title
     filename = file.split('/')[1]
@@ -68,8 +69,6 @@ def read_xml(file):
                 pitch_step = 'rest'
                 pitch_alter = '0'
                 pitch_octave = '0'
-                duration_type = ''
-
                 if ET.iselement(node_note.find('pitch')):
                     pitch_step = node_note.find('./pitch/step').text
 
@@ -80,6 +79,7 @@ def read_xml(file):
 
                 # Duration
                 duration_length = node_note.find('duration').text
+                duration_type = ''
                 if ET.iselement(node_note.find('type')):
                     duration_type = node_note.find('type').text
 
@@ -100,5 +100,15 @@ def read_xml(file):
                         'pitch_octave': pitch_octave, 'duration_length': duration_length,
                         'duration_type': duration_type, 'is_tied': tie, 'is_rest': rest}
                 df = df.append(row, ignore_index=True)
+
+    return df
+
+def read_files(path):
+    """Read all XML files and return a dataframe"""
+
+    df = pd.DataFrame(columns=K.XML_COLUMNS)
+
+    for file in listdir(path):
+        df = df.append(read_xml(path + "/" + file), ignore_index=True)
 
     return df
