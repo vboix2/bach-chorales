@@ -17,7 +17,7 @@ def read_xml(file):
 
     # Title
     filename = file.split('/')[1]
-    title = "BWV " + str(int(filename[:4]))
+    bwv = filename[1:4]
 
     # Part list
     part_list = {}
@@ -50,35 +50,39 @@ def read_xml(file):
 
         # Key
         node_att = node_part.find('./measure/attributes')
-        key_fifths = node_att.find('./key/fifths').text
+        key_fifths = int(node_att.find('./key/fifths').text)
         key_mode = node_att.find('./key/mode').text
 
         # Time
-        divisions = node_att.find('./divisions').text
-        time_beats = node_att.find('./time/beats').text
+        divisions = int(node_att.find('./divisions').text)
+        time_beats = int(node_att.find('./time/beats').text)
         time_type = node_att.find('./time/beat-type').text
 
         # Measures
+        measure = 0
+        is_implicit = True
         for node_measure in node_part.findall('./measure'):
-            measure = node_measure.attrib['number']
+            if 'implicit' not in node_measure.attrib:
+                measure = int(node_measure.attrib['number'])
+                is_implicit = False
 
             # Notes
             for node_note in node_measure.findall('note'):
 
                 # Pitch
                 pitch_step = 'rest'
-                pitch_alter = '0'
-                pitch_octave = '0'
+                pitch_alter = 0
+                pitch_octave = 0
                 if ET.iselement(node_note.find('pitch')):
                     pitch_step = node_note.find('./pitch/step').text
 
                     if ET.iselement(node_note.find('./pitch/alter')):
-                        pitch_alter = node_note.find('./pitch/alter').text
+                        pitch_alter = int(node_note.find('./pitch/alter').text)
 
-                    pitch_octave = node_note.find('./pitch/octave').text
+                    pitch_octave = int(node_note.find('./pitch/octave').text)
 
                 # Duration
-                duration_length = node_note.find('duration').text
+                duration_length = int(node_note.find('duration').text)
                 duration_type = ''
                 if ET.iselement(node_note.find('type')):
                     duration_type = node_note.find('type').text
@@ -94,13 +98,13 @@ def read_xml(file):
                     rest = True
 
                 # add values to dataframe
-                row = {'title': title, 'part': part, 'key_fifths': key_fifths, 'key_mode': key_mode,
+                row = { 'bwv': bwv, 'part': part, 'key_fifths': key_fifths, 'key_mode': key_mode,
                         'divisions': divisions, 'time_beats': time_beats, 'time_type': time_type,
-                        'measure': measure, 'pitch_step': pitch_step, 'pitch_alter': pitch_alter,
-                        'pitch_octave': pitch_octave, 'duration_length': duration_length,
-                        'duration_type': duration_type, 'is_tied': tie, 'is_rest': rest}
+                        'measure': measure, 'is_implicit': is_implicit, 'pitch_step': pitch_step,
+                        'pitch_alter': pitch_alter, 'pitch_octave': pitch_octave,
+                        'duration_length': duration_length, 'duration_type': duration_type,
+                        'is_tied': tie, 'is_rest': rest}
                 df = df.append(row, ignore_index=True)
-
     return df
 
 def read_files(path):
@@ -109,6 +113,11 @@ def read_files(path):
     df = pd.DataFrame(columns=K.XML_COLUMNS)
 
     for file in listdir(path):
-        df = df.append(read_xml(path + "/" + file), ignore_index=True)
+        print("Reading file " + file + " ...", end=" ")
+        try:
+            df = df.append(read_xml(path + "/" + file), ignore_index=True)
+            print("Ok")
+        except:
+            print("Error")
 
     return df

@@ -1,18 +1,15 @@
 
+import pandas as pd
+import re
+
 def clean(df):
 
-    # Convert datatypes
-    df = df.astype({
-        'key_fifths': 'int32',
-        'divisions': 'int32',
-        'time_beats': 'int32',
-        'time_type': 'int32',
-        'measure': 'int32',
-        'pitch_alter': 'int32',
-        'pitch_octave': 'int32',
-        'duration_length': 'int32'
-    })
+    # Work title
+    works = pd.read_csv('csv/bach_works.csv')
 
+    df['bwv'] = df['bwv'].apply(lambda x: int(x.split(" ")[1]))
+
+    df['title'] = pd.merge(df, works, how='left', on='bwv')['title']
 
 
     return df

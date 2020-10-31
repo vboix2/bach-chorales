@@ -82,7 +82,7 @@ bwv,title,key
 073,"Herr, wie du willt, so schick's mit mir",G minor
 074,"Wer mich liebet, der wird mein Wort halten",C major
 075,Die Elenden sollen essen,E minor
-076/1,Die Himmel erzählen die Ehre Gottes,C major
+076,Die Himmel erzählen die Ehre Gottes,C major
 076/2,Die Himmel erzählen die Ehre Gottes,C major
 077,"Du sollt Gott, deinen Herren, lieben",C major
 078,"Jesu, der du meine Seele",G minor
@@ -188,7 +188,7 @@ bwv,title,key
 169,Gott soll allein mein Herze haben,D major
 170,"Vergnügte Ruh, beliebte Seelenlust",D major
 171,"Gott, wie dein Name, so ist auch dein Ruhm",D major
-172/1,"Erschallet, ihr Lieder",D major
+172,"Erschallet, ihr Lieder",D major
 172/2,"Erschallet, ihr Lieder",C major
 173,Erhöhtes Fleisch und Blut,D major
 173a,Durchlauchtster Leopold,D major
@@ -199,8 +199,8 @@ bwv,title,key
 178,Wo Gott der Herr nicht bei uns hält,A minor
 179,"Siehe zu, dass deine Gottesfurcht",G major
 180,"Schmücke dich, o liebe Seele",F major
-181/1,Leichtgesinnte Flattergeister,E minor
-182/1,"Himmelskönig, sei willkommen",G major
+181,Leichtgesinnte Flattergeister,E minor
+182,"Himmelskönig, sei willkommen",G major
 182/2,"Himmelskönig, sei willkommen",G major
 183,Sie werden euch in den Bann tun,A minor
 184,Erwünschtes Freudenlicht,G major
@@ -232,11 +232,11 @@ bwv,title,key
 204,Ich bin in mir vergnügt,B♭ major
 205,"Zerreißet, zersprenget, zertrümmert die Gruft (Der zufriedengestellte Aeolus)",D major
 205a,"Blast Lärmen, ihr Feinde! verstärket die Macht",D major
-206/1,"Schleicht, spielende Wellen",D major
+206,"Schleicht, spielende Wellen",D major
 206/2,"Schleicht, spielende Wellen",D major
 207,Vereinigte Zwietracht der wechselnden Saiten,D major
 207a,"Auf, schmetternde Töne der muntern Trompeten",D major
-208/1,"Was mir behagt, ist nur die muntre Jagd (Jagdkantate)",F major
+208,"Was mir behagt, ist nur die muntre Jagd (Jagdkantate)",F major
 208/2,"Was mir behagt, ist nur die muntre Jagd (Jagdkantate)",F major
 208a,"Was mir behagt, ist nur die muntre Jagd (Frolockender Goetterstreit)",F major
 209,Non sa che sia dolore,B minor
@@ -285,14 +285,14 @@ bwv,title,key
 246,Lukaspassion (St. Luke Passion),
 247,Markuspassion (St. Mark Passion),
 248,Weihnachts-Oratorium (Christmas Oratorio):,
-248/1,"Jauchzet, frohlocket, auf, preiset die Tage",
+248,"Jauchzet, frohlocket, auf, preiset die Tage",
 248/2,Und es waren Hirten in derselben Gegend,
 248/3,"Herrscher des Himmels, erhöre das Lallen",
 248/4,"Fallt mit Danken, fallt mit Loben",
 248/5,"Ehre sei dir, Gott, gesungen",
 248/6,"'Herr, wenn die stolzen Feinde schnauben",
 248a,Cantata,
-249/1,"Kommt, eilet und laufet",
+249,"Kommt, eilet und laufet",
 249/2,Oster-Oratorium (Easter Oratorio),
 249a,"Entfliehet, verschwindet, entweichet, ihr Sorgen (""Schäferkantate"" or ""Shepherd Cantata"")",
 249b,"Verjaget, zerstreuet, zerrütet, ihr Sterne (""Die Feier des Genius"")",
@@ -1018,7 +1018,7 @@ bwv,title,key
 900,Prelude and Fughetta,E minor
 901,Prelude and Fughetta,F major
 902,Prelude and Fughetta,G major
-902/1a,Prelude,G major
+902a,Prelude,G major
 903,Chromatic Fantasia,D minor
 903a,Fantasia,D minor
 904,Fantasia and Fugue,A minor

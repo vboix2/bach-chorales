@@ -1,10 +1,8 @@
-
 import requests
 from time import sleep
 from bs4 import BeautifulSoup
 import pandas as pd
-
-URL = 'https://imslp.org/wiki/List_of_works_by_Johann_Sebastian_Bach'
+import re
 
 
 def download(url, retries):
@@ -25,7 +23,7 @@ def download(url, retries):
 
     return r.text
 
-def get_works(html):
+def parse_works(html):
     """Parse html and get BWV, title and key from Bach's works"""
 
     df = pd.DataFrame(columns=['bwv','title','key'])
@@ -43,7 +41,24 @@ def get_works(html):
     return df
 
 
-html = download(URL, 3)
-works = get_works(html)
-works = works.iloc[:-3,:]
-works.to_csv('csv/bach_works.csv', index=False)
+def clean_works(df):
+    """Clean works dataframe"""
+
+    # BWV
+    df['bwv'] = df['bwv'].apply(lambda x: re.sub('/1', '', x))
+
+    # Exclude last rows
+    df = df.iloc[:-3, :]
+
+    return df
+
+
+def get_works():
+    """Return a list of works of Bach in a dataframe"""
+
+    URL = 'https://imslp.org/wiki/List_of_works_by_Johann_Sebastian_Bach'
+    html = download(URL, 3)
+    works = parse_works(html)
+    works = clean_works(works)
+
+    return works

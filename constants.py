@@ -1,6 +1,6 @@
 # Xml dataframe columns
 XML_COLUMNS = [
-    'title',
+    'bwv',
     'part',
     'key_fifths',
     'key_mode',
@@ -8,6 +8,7 @@ XML_COLUMNS = [
     'time_beats',
     'time_type',
     'measure',
+    'is_implicit',
     'pitch_step',
     'pitch_alter',
     'pitch_octave',
