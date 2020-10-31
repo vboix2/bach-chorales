@@ -1,8 +1,9 @@
+import constants as K
+import read
 import xml.etree.ElementTree as ET
 import re
 import pandas as pd
-import constants as K
-from os import listdir
+from os import listdir, path
 
 
 def read_xml(file):
@@ -107,9 +108,9 @@ def read_xml(file):
                 df = df.append(row, ignore_index=True)
     return df
 
-def read_files(path):
-    """Read all XML files and return a dataframe"""
 
+def read_files(path):
+    """Read all XML files in a folder and return a dataframe"""
     df = pd.DataFrame(columns=K.XML_COLUMNS)
 
     for file in listdir(path):
@@ -119,5 +120,16 @@ def read_files(path):
             print("Ok")
         except:
             print("Error")
+
+    return df
+
+
+def get_chorale():
+    """Get all chorale works from Bach and returns a dataframe"""
+    if path.exists('csv/chorales_xml.csv'):
+        df = pd.read_csv('csv/chorales_xml.csv', dtype={'bwv': object})
+    else:
+        df = read.read_files('xml')
+        df.to_csv('csv/chorales_xml.csv', index=False)
 
     return df

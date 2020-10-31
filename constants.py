@@ -1,4 +1,4 @@
-# Xml dataframe columns
+# Read dataframe
 XML_COLUMNS = [
     'bwv',
     'part',
@@ -18,6 +18,16 @@ XML_COLUMNS = [
     'is_rest'
 ]
 
+# Transform
 FIFTHS = ['Fb','Cb','Gb','Db','Ab','Eb','Bb',
           'F','C','G','D','A','E','B',
           'F#','C#','G#','D#','A#','E#','B#']
+STEP_MAP = {'C': 0, 'D': 2, 'E': 4, 'F': 5, 'G': 7, 'A': 9, 'B': 11, 'rest':0}
+ALTER_MAP = {-2: 'bb', -1: 'b', 0: '', 1: '#', 2:'##'}
+
+# Column groups
+WORK_COLS = ['bwv','title','work']
+KEY_COLS = ['key_fifths','key_pitch','key_mode','key']
+PITCH_COLS = ['pitch_octave','pitch_tone','pitch_step','pitch_alter']
+
+COLUMNS = [WORK_COLS, KEY_COLS, PITCH_COLS]
