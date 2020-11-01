@@ -1,23 +1,19 @@
 import works
 import constants as K
-from os import path
 import pandas as pd
+from os import path
 
 
-def process(df):
+def clean(df):
 
-    # Title column
-    if path.exists('csv/bach_works.csv'):
-        works_df = pd.read_csv('csv/bach_works.csv')
-    else:
-        works_df = works.get_works()
-        works_df.to_csv('csv/bach_works.csv', index=False)
+    # Title
+    works_df = works.get_works()
     df = pd.merge(df, works_df, how='left', on='bwv')
 
-    # Work column
+    # Work
     df['work'] = 'BWV ' + df['bwv'] + ". " + df['title']
 
-    # Key column
+    # Key
     def get_key(row):
         if row['key_mode'] == 'major':
             idx = row['key_fifths'] + 8
@@ -29,7 +25,10 @@ def process(df):
 
     df['key_pitch'] = df.apply(get_key, axis=1)
 
-    # Tone column
+    # Metre
+    df['metre'] = df.apply(lambda x: str(x['time_beats']) + "/" + str(x['time_type']), axis=1)
+
+    # Tone
     def get_tone(row):
         tone = (row['pitch_octave'] + 1) * 12 + K.STEP_MAP[row['pitch_step']] + row['pitch_alter']
         return tone
@@ -43,4 +42,15 @@ def process(df):
 
     df['pitch_step'] = df.apply(get_step, axis=1)
 
+    # Time column
+
     return df
+
+
+def process(df):
+
+    if path.exists('csv/chorales_clean.csv'):
+        df = pd.read_csv('csv/chorales_clean.csv', dtype={'bwv': object})
+    else:
+        df = clean(df)
+        df.to_csv('csv/chorales_clean.csv', index=False)

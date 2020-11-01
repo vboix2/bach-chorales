@@ -3,6 +3,7 @@ from time import sleep
 from bs4 import BeautifulSoup
 import pandas as pd
 import re
+from os import path
 
 
 def download(url, retries):
@@ -19,9 +20,10 @@ def download(url, retries):
             sleep(10.0)
             return (download(url, retries-1))
         else:
-            raise Exception("Superat maxim nombre d'intents de descarrega")
+            raise Exception("Problem downloading")
 
     return r.text
+
 
 def parse_works(html):
     """Parse html and get BWV, title and key from Bach's works"""
@@ -54,11 +56,15 @@ def clean_works(df):
 
 
 def get_works():
-    """Return a list of works of Bach in a dataframe"""
+    """Return a list of Bach works in a dataframe"""
 
-    URL = 'https://imslp.org/wiki/List_of_works_by_Johann_Sebastian_Bach'
-    html = download(URL, 3)
-    works = parse_works(html)
-    works = clean_works(works)
+    if path.exists('csv/bach_works.csv'):
+        df = pd.read_csv('csv/bach_works.csv')
+    else:
+        URL = 'https://imslp.org/wiki/List_of_works_by_Johann_Sebastian_Bach'
+        html = download(URL, 3)
+        df = parse_works(html)
+        df = clean_works(df)
+        df.to_csv('csv/bach_works.csv', index=False)
 
-    return works
+    return df

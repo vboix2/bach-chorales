@@ -27,7 +27,11 @@ ALTER_MAP = {-2: 'bb', -1: 'b', 0: '', 1: '#', 2:'##'}
 
 # Column groups
 WORK_COLS = ['bwv','title','work']
-KEY_COLS = ['key_fifths','key_pitch','key_mode','key']
+KEY_COLS = ['key_fifths','key_pitch','key_mode']
+METRE_COLS = ['time_beats','time_type', 'metre']
 PITCH_COLS = ['pitch_octave','pitch_tone','pitch_step','pitch_alter']
+TIME_COLS = ['measure','beat']
+DURATION_COLS = ['duration_length','is_tied']
+
 
 COLUMNS = [WORK_COLS, KEY_COLS, PITCH_COLS]
