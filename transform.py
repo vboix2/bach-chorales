@@ -42,7 +42,27 @@ def clean(df):
 
     df['pitch_step'] = df.apply(get_step, axis=1)
 
-    # Time column
+    # Duration
+    df['duration'] = df['duration_length'] * 12 / df['divisions']
+
+    #Time
+    df['time'] = 0
+    for w in df.bwv.unique():
+        for p in ['Soprano','Alto','Tenor','Bass']:
+            idxs = df.query('bwv==@w and part==@p').index
+            first_idx = min(idxs)
+            last_idx = max(idxs)
+            time = 0
+            for i in range(first_idx, last_idx + 1):
+                df.loc[df.index==i,'time'] = time
+                time += df.loc[df.index==i,'duration'].item()
+
+        first_measure_time = min(df.query('bwv==@w and measure==1').time)
+        df.loc[df.bwv==w,'time'] = df.loc[df.bwv==w,'time'] - first_measure_time
+
+    # Measure time
+    df['measure_time'] = df['time'] - (df['measure'] - 1) * df['time_beats'] * 12
+
 
     return df
 

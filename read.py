@@ -113,7 +113,7 @@ def read_files(path):
     """Read all XML files in a folder and return a dataframe"""
     df = pd.DataFrame(columns=K.XML_COLUMNS)
 
-    for file in listdir(path):
+    for file in listdir(path)[:10]:
         print("Reading file " + file + " ...", end=" ")
         try:
             df = df.append(read_xml(path + "/" + file), ignore_index=True)
