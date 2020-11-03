@@ -30,7 +30,9 @@ def clean(df):
 
     # Tone
     def get_tone(row):
-        tone = (row['pitch_octave'] + 1) * 12 + K.STEP_MAP[row['pitch_step']] + row['pitch_alter']
+        tone = 0
+        if not row['is_rest']:
+            tone = (row['pitch_octave'] + 1) * 12 + K.STEP_MAP[row['pitch_step']] + row['pitch_alter']
         return tone
 
     df['pitch_tone'] = df.apply(get_tone, axis=1)
@@ -45,7 +47,7 @@ def clean(df):
     # Duration
     df['duration'] = df['duration_length'] * 12 / df['divisions']
 
-    #Time
+    # Time
     df['time'] = 0
     for w in df.bwv.unique():
         for p in ['Soprano','Alto','Tenor','Bass']:
@@ -63,7 +65,6 @@ def clean(df):
     # Measure time
     df['measure_time'] = df['time'] - (df['measure'] - 1) * df['time_beats'] * 12
 
-
     return df
 
 
@@ -74,3 +75,10 @@ def process(df):
     else:
         df = clean(df)
         df.to_csv('csv/chorales_clean.csv', index=False)
+
+
+def analyze(df):
+
+    df['pitch_tonal'] = (df['pitch_tone'] - df['key_pitch'].map(K.STEP_MAP)) % 12
+
+    return df

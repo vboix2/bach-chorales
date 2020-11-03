@@ -4,5 +4,8 @@ import pandas as pd
 
 chorales = read.get_chorale()
 
-chorales = transform.process(chorales)
+chorales = transform.clean(chorales)
+chorales = transform.analyze(chorales)
+
+print(chorales.head())
 
